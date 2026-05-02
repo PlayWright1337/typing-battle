@@ -1,0 +1,311 @@
+#battle-container {
+    width: 100%;
+    max-width: 900px;
+}
+
+.battle-config {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+    animation: fadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.battle-config-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.battle-config-group label {
+    color: var(--sub);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: lowercase;
+    font-family: var(--font);
+}
+
+.difficulty-btns,
+.duration-btns {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.battle-start-btn {
+    background: var(--accent);
+    color: var(--bg);
+    border: none;
+    font-family: var(--font);
+    font-size: 16px;
+    font-weight: 700;
+    padding: 13px 48px;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    margin-top: 8px;
+    letter-spacing: 0.04em;
+    box-shadow:
+        0 0 0 0 var(--accent-glow),
+        0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.battle-start-btn:hover {
+    filter: brightness(1.12);
+    transform: translateY(-2px);
+    box-shadow:
+        0 0 0 5px var(--accent-glow),
+        0 8px 32px rgba(0, 0, 0, 0.35);
+}
+
+.battle-start-btn:active {
+    filter: brightness(0.95);
+    transform: translateY(0);
+    box-shadow:
+        0 0 0 2px var(--accent-glow),
+        0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.battle-arena {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    animation: fadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.battle-arena.hidden {
+    display: none;
+}
+
+.battle-timer {
+    text-align: center;
+    font-size: 40px;
+    font-weight: 700;
+    color: var(--accent);
+    text-shadow: 0 0 36px var(--accent-glow);
+    letter-spacing: -1.5px;
+    transition: var(--transition-smooth);
+}
+
+.battle-progress {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.battle-player {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.player-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+}
+
+.player-name {
+    color: var(--text);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+
+.ai-name {
+    color: var(--error);
+}
+
+.player-wpm {
+    color: var(--sub);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    transition: var(--transition-smooth);
+}
+
+.progress-bar {
+    height: 8px;
+    background: var(--bg-secondary);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 0%;
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 48px;
+    height: 100%;
+    background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.45) 100%);
+    border-radius: 0 4px 4px 0;
+    animation: shimmer 1.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.player-fill {
+    background: linear-gradient(90deg, var(--accent) 0%, color-mix(in srgb, var(--accent) 75%, #ffffff) 100%);
+    box-shadow: 0 0 14px var(--accent-glow);
+}
+
+.ai-fill {
+    background: linear-gradient(90deg, var(--error) 0%, color-mix(in srgb, var(--error) 75%, #ffffff) 100%);
+    box-shadow: 0 0 14px var(--error-glow);
+}
+
+.battle-results {
+    text-align: center;
+    animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.battle-results.hidden {
+    display: none;
+}
+
+.battle-winner {
+    font-size: 46px;
+    font-weight: 700;
+    margin-bottom: 36px;
+    letter-spacing: -0.5px;
+    animation: slideUp 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.battle-winner.win {
+    color: var(--accent);
+    text-shadow: 0 0 56px var(--accent-glow);
+}
+
+.battle-winner.lose {
+    color: var(--error);
+    text-shadow: 0 0 56px var(--error-glow);
+}
+
+.battle-winner.draw {
+    color: var(--sub);
+}
+
+.battle-scores {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    margin-bottom: 36px;
+}
+
+.battle-score-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 26px 40px;
+    background: var(--bg-secondary);
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.22);
+    transition: var(--transition-smooth);
+    animation: slideUp 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.battle-score-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 36px rgba(0, 0, 0, 0.32);
+}
+
+.score-name {
+    font-size: 12px;
+    color: var(--sub);
+    letter-spacing: 0.08em;
+    text-transform: lowercase;
+}
+
+.score-wpm {
+    font-size: 54px;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1.05;
+    letter-spacing: -1.5px;
+    text-shadow: 0 0 36px var(--accent-glow);
+}
+
+.ai-card .score-wpm {
+    color: var(--error);
+    text-shadow: 0 0 36px var(--error-glow);
+}
+
+.score-label {
+    font-size: 11px;
+    color: var(--sub);
+    letter-spacing: 0.06em;
+}
+
+.score-acc {
+    font-size: 14px;
+    color: var(--text);
+    font-weight: 500;
+}
+
+.battle-vs {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--sub);
+    opacity: 0.4;
+    letter-spacing: 0.04em;
+}
+
+.countdown-overlay {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.68);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 100;
+    animation: fadeIn 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+    gap: 16px;
+}
+
+.countdown-number {
+    font-size: 128px;
+    font-weight: 700;
+    color: var(--accent);
+    text-shadow:
+        0 0 60px var(--accent-glow-strong),
+        0 0 120px var(--accent-glow);
+    line-height: 1;
+    font-family: var(--font);
+    letter-spacing: -6px;
+    animation: countdown 0.85s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.countdown-label {
+    font-size: 14px;
+    color: var(--sub);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-family: var(--font);
+    opacity: 0.8;
+}
+
+.confetti-particle {
+    position: fixed;
+    pointer-events: none;
+    z-index: 200;
+    border-radius: 2px;
+    animation: confettiFall 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    will-change: transform, opacity;
+}

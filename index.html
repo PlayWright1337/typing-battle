@@ -1,0 +1,464 @@
+<!doctype html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Typing Battle</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Fira+Code:wght@300;400;500;600;700&family=Source+Code+Pro:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;600;700&family=Roboto+Mono:wght@300;400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="css/base.css" />
+        <link rel="stylesheet" href="css/animations.css" />
+        <link rel="stylesheet" href="css/layout.css" />
+        <link rel="stylesheet" href="css/test.css" />
+        <link rel="stylesheet" href="css/battle.css" />
+        <link rel="stylesheet" href="css/settings.css" />
+        <link rel="stylesheet" href="css/stats.css" />
+    </head>
+    <body>
+        <div id="app">
+            <header id="header">
+                <div class="logo">
+                    <span class="logo-icon">⌨</span>
+                    <span class="logo-text"
+                        >typing<span class="accent">battle</span></span
+                    >
+                </div>
+                <nav id="nav">
+                    <button class="nav-btn active" data-page="test">
+                        test
+                    </button>
+                    <button class="nav-btn" data-page="battle">vs AI</button>
+                    <button class="nav-btn" data-page="settings">
+                        settings
+                    </button>
+                    <button class="nav-btn" data-page="stats">stats</button>
+                </nav>
+                <div class="header-right">
+                    <button
+                        id="theme-toggle"
+                        class="icon-btn"
+                        title="Toggle theme"
+                    >
+                        <svg
+                            width="18"
+                            height="18"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                        >
+                            <path
+                                d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
+                            />
+                        </svg>
+                    </button>
+                </div>
+            </header>
+
+            <div id="config-bar" class="config-bar">
+                <div class="config-group" id="mode-group">
+                    <button
+                        class="config-btn"
+                        data-mode="punctuation"
+                        title="Include punctuation"
+                    >
+                        @ punctuation
+                    </button>
+                    <button
+                        class="config-btn"
+                        data-mode="numbers"
+                        title="Include numbers"
+                    >
+                        # numbers
+                    </button>
+                </div>
+                <div class="config-separator"></div>
+                <div class="config-group" id="type-group">
+                    <button class="config-btn active" data-type="time">
+                        time
+                    </button>
+                    <button class="config-btn" data-type="words">words</button>
+                    <button class="config-btn" data-type="quote">quote</button>
+                    <button class="config-btn" data-type="zen">zen</button>
+                </div>
+                <div class="config-separator"></div>
+                <div class="config-group" id="value-group"></div>
+            </div>
+
+            <main id="test-page" class="page active">
+                <div id="test-container">
+                    <div id="timer-display" class="timer-display hidden">
+                        <span id="timer-value">30</span>
+                    </div>
+                    <div id="word-count-display" class="timer-display hidden">
+                        <span id="word-count-value">0/25</span>
+                    </div>
+                    <div id="text-display" class="text-display">
+                        <div id="caret" class="caret"></div>
+                        <div id="words-wrapper"></div>
+                    </div>
+                    <div id="input-wrapper">
+                        <input
+                            type="text"
+                            id="typing-input"
+                            autocomplete="off"
+                            autocorrect="off"
+                            autocapitalize="off"
+                            spellcheck="false"
+                        />
+                    </div>
+                    <div id="restart-hint" class="restart-hint">
+                        <span>tab</span> + <span>enter</span> — restart test
+                    </div>
+                </div>
+
+                <div id="results" class="results hidden">
+                    <div class="results-main">
+                        <div class="result-block">
+                            <div class="result-label">wpm</div>
+                            <div class="result-value" id="result-wpm">0</div>
+                        </div>
+                        <div class="result-block">
+                            <div class="result-label">acc</div>
+                            <div class="result-value" id="result-acc">0%</div>
+                        </div>
+                    </div>
+                    <div class="results-details">
+                        <div class="result-detail">
+                            <span class="detail-label">raw</span>
+                            <span class="detail-value" id="result-raw">0</span>
+                        </div>
+                        <div class="result-detail">
+                            <span class="detail-label">characters</span>
+                            <span class="detail-value" id="result-chars"
+                                >0/0/0/0</span
+                            >
+                        </div>
+                        <div class="result-detail">
+                            <span class="detail-label">consistency</span>
+                            <span class="detail-value" id="result-consistency"
+                                >0%</span
+                            >
+                        </div>
+                        <div class="result-detail">
+                            <span class="detail-label">time</span>
+                            <span class="detail-value" id="result-time"
+                                >0s</span
+                            >
+                        </div>
+                    </div>
+                    <div id="wpm-chart" class="wpm-chart">
+                        <canvas id="chart-canvas"></canvas>
+                    </div>
+                    <button id="restart-btn" class="restart-btn">
+                        next test
+                    </button>
+                </div>
+            </main>
+
+            <main id="battle-page" class="page">
+                <div id="battle-container">
+                    <div class="battle-config">
+                        <div class="battle-config-group">
+                            <label>AI Difficulty</label>
+                            <div class="difficulty-btns">
+                                <button
+                                    class="config-btn"
+                                    data-difficulty="easy"
+                                >
+                                    easy (30 wpm)
+                                </button>
+                                <button
+                                    class="config-btn active"
+                                    data-difficulty="medium"
+                                >
+                                    medium (60 wpm)
+                                </button>
+                                <button
+                                    class="config-btn"
+                                    data-difficulty="hard"
+                                >
+                                    hard (90 wpm)
+                                </button>
+                                <button
+                                    class="config-btn"
+                                    data-difficulty="expert"
+                                >
+                                    expert (120 wpm)
+                                </button>
+                                <button
+                                    class="config-btn"
+                                    data-difficulty="impossible"
+                                >
+                                    impossible (160 wpm)
+                                </button>
+                            </div>
+                        </div>
+                        <div class="battle-config-group">
+                            <label>Duration</label>
+                            <div class="duration-btns">
+                                <button class="config-btn" data-bduration="15">
+                                    15s
+                                </button>
+                                <button
+                                    class="config-btn active"
+                                    data-bduration="30"
+                                >
+                                    30s
+                                </button>
+                                <button class="config-btn" data-bduration="60">
+                                    60s
+                                </button>
+                            </div>
+                        </div>
+                        <button id="battle-start" class="battle-start-btn">
+                            Start Battle
+                        </button>
+                    </div>
+
+                    <div id="battle-arena" class="battle-arena hidden">
+                        <div id="battle-timer" class="battle-timer">30</div>
+                        <div class="battle-progress">
+                            <div class="battle-player">
+                                <div class="player-info">
+                                    <span class="player-name">You</span>
+                                    <span class="player-wpm" id="player-wpm"
+                                        >0 wpm</span
+                                    >
+                                </div>
+                                <div class="progress-bar">
+                                    <div
+                                        class="progress-fill player-fill"
+                                        id="player-progress"
+                                    ></div>
+                                </div>
+                            </div>
+                            <div class="battle-player">
+                                <div class="player-info">
+                                    <span class="player-name ai-name"
+                                        >AI Bot</span
+                                    >
+                                    <span class="player-wpm" id="ai-wpm"
+                                        >0 wpm</span
+                                    >
+                                </div>
+                                <div class="progress-bar">
+                                    <div
+                                        class="progress-fill ai-fill"
+                                        id="ai-progress"
+                                    ></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="battle-text-display" class="text-display">
+                            <div id="battle-caret" class="caret"></div>
+                            <div
+                                id="battle-ai-caret"
+                                class="caret ai-caret"
+                            ></div>
+                            <div id="battle-words-wrapper"></div>
+                        </div>
+                        <input
+                            type="text"
+                            id="battle-input"
+                            autocomplete="off"
+                            autocorrect="off"
+                            autocapitalize="off"
+                            spellcheck="false"
+                        />
+                    </div>
+
+                    <div id="battle-results" class="battle-results hidden">
+                        <div class="battle-winner" id="battle-winner">
+                            You Win!
+                        </div>
+                        <div class="battle-scores">
+                            <div class="battle-score-card">
+                                <div class="score-name">You</div>
+                                <div
+                                    class="score-wpm"
+                                    id="battle-player-final-wpm"
+                                >
+                                    0
+                                </div>
+                                <div class="score-label">wpm</div>
+                                <div
+                                    class="score-acc"
+                                    id="battle-player-final-acc"
+                                >
+                                    0% acc
+                                </div>
+                            </div>
+                            <div class="battle-vs">VS</div>
+                            <div class="battle-score-card ai-card">
+                                <div class="score-name">AI Bot</div>
+                                <div class="score-wpm" id="battle-ai-final-wpm">
+                                    0
+                                </div>
+                                <div class="score-label">wpm</div>
+                                <div class="score-acc" id="battle-ai-final-acc">
+                                    0% acc
+                                </div>
+                            </div>
+                        </div>
+                        <button id="battle-restart" class="battle-start-btn">
+                            Rematch
+                        </button>
+                    </div>
+                </div>
+            </main>
+
+            <main id="settings-page" class="page">
+                <div class="settings-container">
+                    <div class="settings-section">
+                        <h3>Theme</h3>
+                        <div class="theme-grid" id="theme-grid"></div>
+                    </div>
+                    <div class="settings-section">
+                        <h3>Font</h3>
+                        <div class="font-grid" id="font-grid"></div>
+                    </div>
+                    <div class="settings-section">
+                        <h3>Font Size</h3>
+                        <div class="font-size-control">
+                            <input
+                                type="range"
+                                id="font-size-slider"
+                                min="14"
+                                max="32"
+                                value="20"
+                            />
+                            <span id="font-size-value">20px</span>
+                        </div>
+                    </div>
+                    <div class="settings-section">
+                        <h3>Caret Style</h3>
+                        <div class="caret-options" id="caret-options">
+                            <button class="config-btn active" data-caret="line">
+                                | line
+                            </button>
+                            <button class="config-btn" data-caret="block">
+                                █ block
+                            </button>
+                            <button class="config-btn" data-caret="underline">
+                                _ underline
+                            </button>
+                        </div>
+                    </div>
+                    <div class="settings-section">
+                        <h3>Smooth Caret</h3>
+                        <div class="toggle-group">
+                            <button class="config-btn active" data-smooth="on">
+                                on
+                            </button>
+                            <button class="config-btn" data-smooth="off">
+                                off
+                            </button>
+                        </div>
+                    </div>
+                    <div class="settings-section">
+                        <h3>Sound</h3>
+                        <div class="toggle-group">
+                            <button class="config-btn" data-sound="on">
+                                on
+                            </button>
+                            <button class="config-btn active" data-sound="off">
+                                off
+                            </button>
+                        </div>
+                    </div>
+                    <div class="settings-section">
+                        <h3>Language</h3>
+                        <div class="lang-options" id="lang-options">
+                            <button
+                                class="config-btn active"
+                                data-lang="english"
+                            >
+                                english
+                            </button>
+                            <button class="config-btn" data-lang="russian">
+                                russian
+                            </button>
+                            <button class="config-btn" data-lang="code_js">
+                                code JS
+                            </button>
+                            <button class="config-btn" data-lang="code_py">
+                                code Python
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <main id="stats-page" class="page">
+                <div class="stats-container">
+                    <div class="stats-summary">
+                        <div class="stat-card">
+                            <div class="stat-value" id="stat-tests">0</div>
+                            <div class="stat-label">tests completed</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="stat-avg-wpm">0</div>
+                            <div class="stat-label">average wpm</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="stat-best-wpm">0</div>
+                            <div class="stat-label">best wpm</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="stat-avg-acc">0%</div>
+                            <div class="stat-label">average accuracy</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="stat-battles-won">
+                                0
+                            </div>
+                            <div class="stat-label">battles won</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="stat-total-time">
+                                0m
+                            </div>
+                            <div class="stat-label">time typing</div>
+                        </div>
+                    </div>
+                    <div class="stats-history">
+                        <h3>Recent Tests</h3>
+                        <div id="history-list" class="history-list">
+                            <div class="history-empty">
+                                No tests completed yet. Start typing!
+                            </div>
+                        </div>
+                    </div>
+                    <button id="clear-stats" class="clear-stats-btn">
+                        clear all stats
+                    </button>
+                </div>
+            </main>
+
+            <footer id="footer">
+                <div class="footer-links">
+                    <span class="footer-hint">tab + enter — restart</span>
+                    <span class="footer-hint">esc — stop test</span>
+                </div>
+            </footer>
+        </div>
+
+        <script src="js/words.js"></script>
+        <script src="js/themes.js"></script>
+        <script src="js/utils.js"></script>
+        <script src="js/state.js"></script>
+        <script src="js/audio.js"></script>
+        <script src="js/chart.js"></script>
+        <script src="js/render.js"></script>
+        <script src="js/test.js"></script>
+        <script src="js/battle.js"></script>
+        <script src="js/settings.js"></script>
+        <script src="js/stats.js"></script>
+        <script src="js/app.js"></script>
+    </body>
+</html>

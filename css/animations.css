@@ -1,0 +1,207 @@
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(28px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.05);
+        opacity: 0.75;
+    }
+}
+
+@keyframes countdown {
+    0% {
+        opacity: 0;
+        transform: scale(1.7);
+        filter: blur(10px);
+    }
+    25% {
+        opacity: 1;
+        transform: scale(1);
+        filter: blur(0);
+    }
+    75% {
+        opacity: 1;
+        transform: scale(1);
+        filter: blur(0);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.55);
+        filter: blur(6px);
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        opacity: 0.2;
+    }
+    50% {
+        opacity: 0.75;
+    }
+    100% {
+        opacity: 0.2;
+    }
+}
+
+@keyframes confettiFall {
+    0% {
+        opacity: 1;
+        transform: translateY(0) rotate(0deg) scale(1);
+    }
+    80% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(100vh) rotate(720deg) scale(0.4);
+    }
+}
+
+@keyframes glowPulse {
+    0%, 100% {
+        box-shadow: 0 0 8px var(--accent-glow);
+    }
+    50% {
+        box-shadow: 0 0 22px var(--accent-glow-strong);
+    }
+}
+
+.smooth-transition {
+    transition: var(--transition-smooth);
+}
+
+@media (max-width: 900px) {
+    .results-main {
+        gap: 40px;
+    }
+
+    .battle-scores {
+        gap: 24px;
+    }
+}
+
+@media (max-width: 768px) {
+    #app {
+        padding: 0 16px;
+    }
+
+    header {
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 14px 0;
+    }
+
+    #nav {
+        margin-left: 0;
+        order: 3;
+        width: 100%;
+        justify-content: center;
+    }
+
+    .config-bar {
+        padding: 8px 12px;
+        border-radius: var(--radius-md);
+    }
+
+    .results-main {
+        gap: 28px;
+        flex-wrap: wrap;
+    }
+
+    .result-value {
+        font-size: 42px;
+    }
+
+    .results-details {
+        gap: 20px;
+    }
+
+    .stats-summary {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .battle-scores {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .battle-vs {
+        font-size: 16px;
+    }
+
+    .battle-score-card {
+        padding: 18px 28px;
+        width: 100%;
+        max-width: 240px;
+    }
+
+    .countdown-number {
+        font-size: 80px;
+        letter-spacing: -2px;
+    }
+
+    .theme-grid {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    }
+
+    .font-grid {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    }
+
+    .battle-winner {
+        font-size: 36px;
+    }
+
+    .timer-display {
+        font-size: 26px;
+    }
+}
+
+@media (max-width: 480px) {
+    .stats-summary {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+
+    .result-value {
+        font-size: 36px;
+    }
+
+    .config-btn {
+        font-size: 12px;
+        padding: 4px 9px;
+    }
+
+    .battle-start-btn {
+        padding: 12px 32px;
+        font-size: 15px;
+    }
+}
