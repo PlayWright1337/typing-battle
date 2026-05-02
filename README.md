@@ -1,4 +1,6 @@
 # ⌨ Typing Battle
+### Link
+https://playwright1337.github.io/typing-battle/
 ### Test Mode
 - **Time** — type as many words as possible within a set time limit (15 / 30 / 60 / 120s)
 - **Words** — complete a fixed number of words (10 / 25 / 50 / 100)
